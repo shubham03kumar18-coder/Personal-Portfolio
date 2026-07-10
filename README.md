@@ -7,7 +7,7 @@
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-A professional, fully responsive portfolio website built with pure HTML5, CSS3, and JavaScript.
+A professional, fully responsive personal portfolio website built with pure **HTML5**, **CSS3**, and **JavaScript** — no frameworks, no libraries.
 
 ---
 
@@ -23,12 +23,12 @@ A professional, fully responsive portfolio website built with pure HTML5, CSS3, 
 
 ## Features
 
-- Responsive Design — works on desktop, tablet, and mobile
-- Dark / Light Mode support
+- Responsive Design — works on all screen sizes (desktop, tablet, mobile)
+- Dark / Light Mode toggle
 - Interactive UI with smooth animations
 - Smooth scrolling navigation
-- Modern portfolio layout
-- Contact form validation
+- Modern portfolio layout with projects showcase
+- Contact form with validation
 - Resume download
 - GitHub and LinkedIn integration
 
@@ -45,10 +45,10 @@ A professional, fully responsive portfolio website built with pure HTML5, CSS3, 
 ## Project Structure
 
 ```
-/
-├── index.html       # Main HTML file
-├── styles.css       # All CSS styling
-├── script.js        # All JavaScript functionality
+Personal-Portfolio/
+├── index.html       # Main HTML structure
+├── styles.css       # All styling and animations
+├── script.js        # All interactivity and DOM logic
 └── README.md        # Project documentation
 ```
 
@@ -56,30 +56,27 @@ A professional, fully responsive portfolio website built with pure HTML5, CSS3, 
 
 ## Installation
 
-### Run Locally
-
 ```bash
 # Clone the repository
 git clone https://github.com/shubham03kumar18-coder/Personal-Portfolio.git
 
-# Navigate into the project
+# Navigate into the project folder
 cd Personal-Portfolio
 
-# Start a local server (Python 3)
+# Open index.html directly in your browser
+# Or start a local server with Python 3:
 python3 -m http.server 8000
-
-# Open in your browser
-# http://localhost:8000
+# Then visit: http://localhost:8000
 ```
 
 ---
 
 ## Deployment
 
-This project is hosted on Vercel. It can also be deployed to GitHub Pages:
+This project is hosted on Vercel. It can also be deployed to **GitHub Pages**:
 
 1. Push the project files to a GitHub repository.
-2. Go to **Settings > Pages** in the repository.
+2. Go to **Settings > Pages** in your repository.
 3. Set the source branch to `main` and folder to `/ (root)`.
 4. Your portfolio will be live at `https://your-username.github.io/Personal-Portfolio`.
 
@@ -87,7 +84,7 @@ This project is hosted on Vercel. It can also be deployed to GitHub Pages:
 
 ## Screenshots
 
-> Screenshots can be added here once the portfolio is live and finalized.
+> Screenshots will be added once finalized. Visit the [Live Demo](https://personal-portfolio-j4dwrgjh0-shubhammmmmmmmm.vercel.app) to see the portfolio in action.
 
 ---
 
@@ -97,7 +94,6 @@ This project is hosted on Vercel. It can also be deployed to GitHub Pages:
 
 - Pre-final year B.Tech Computer Science student
 - Full-Stack Developer with 8+ months of production experience
-- Specialized in EdTech and location-based applications
 - Email: Shubham46845@gmail.com
 - LinkedIn: [subham-kumar-888a98362](https://www.linkedin.com/in/subham-kumar-888a98362/)
 - GitHub: [shubham03kumar18-coder](https://github.com/shubham03kumar18-coder)
