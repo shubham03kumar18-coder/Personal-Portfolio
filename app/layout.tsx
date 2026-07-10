@@ -4,8 +4,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Subham Kumar | Full-Stack Developer',
-  description: 'Full-stack developer specializing in EdTech and Maps. Experienced with Next.js, React, TypeScript, and Supabase.',
-  generator: 'v0.app',
+  description: 'Personal portfolio of Subham Kumar — Full-Stack Developer specializing in responsive web development with HTML5, CSS3, and JavaScript.',
+  generator: undefined,
   icons: {
     icon: [
       {
