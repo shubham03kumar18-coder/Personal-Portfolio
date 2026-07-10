@@ -1,4 +1,4 @@
-# Subham Kumar - Professional Portfolio
+# Personal Portfolio
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -7,247 +7,103 @@
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-## 🚀 Live Demo
+A professional, fully responsive portfolio website built with pure HTML5, CSS3, and JavaScript.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://personal-portfolio-fedg9ufx1-shubhammmmmmmmm.vercel.app)
+---
+
+## Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://personal-portfolio-mc314j5x6-shubhammmmmmmmm.vercel.app)
+
+## GitHub Repository
+
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Source%20Code-222222?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shubham03kumar18-coder/Personal-Portfolio)
 
-A premium, fully responsive portfolio website built with **pure HTML5, CSS3, and Vanilla JavaScript**.
-
-## Project Overview
-
-This is a recruiter-optimized professional portfolio featuring:
-- Modern, professional design
-- Fully responsive layout (desktop, tablet, mobile)
-- Smooth scrolling navigation
-- All modern JavaScript (ES6+) features
-- Dark mode support
-- Live project links and resume download
-- Contact information and social links
-- No frameworks, no dependencies
+---
 
 ## Features
 
-### Sections
-- **Home**: Hero section with profile image, introduction, and CTA buttons
-- **About**: Professional summary with feature highlights
-- **Skills**: Organized by categories (Frontend, Backend, Databases, Tools)
-- **Experience**: Timeline view of professional experience
-- **Projects**: Featured projects with problem-solution-impact format
-  - Tradeverse City (EdTech Platform)
-  - Smart Parking Finder (Location-based Booking)
-- **Certifications**: Professional certifications and awards
-- **Education**: Educational background
-- **Resume**: Downloadable resume with professional summary
-- **Contact**: Multiple contact methods and social links
+- Responsive Design — works on desktop, tablet, and mobile
+- Dark / Light Mode support
+- Interactive UI with smooth animations
+- Smooth scrolling navigation
+- Modern portfolio layout
+- Contact form validation
+- Resume download
+- GitHub and LinkedIn integration
 
-### Technical Features
-- **Sticky Navigation**: Always accessible navigation bar
-- **Mobile Menu**: Hamburger menu for mobile devices
-- **Smooth Scrolling**: Smooth page navigation
-- **Intersection Observer**: Fade-in animations for elements
-- **Dark Mode**: Automatic dark mode detection
-- **Keyboard Navigation**: Escape key to close mobile menu
-- **Responsive Design**: Mobile-first approach
-- **Performance**: Optimized CSS with variables and efficient selectors
+---
 
-## Technology Stack
+## Technologies Used
 
-### Frontend
-- **HTML5**: Semantic markup
-- **CSS3**: Custom properties (variables), Flexbox, Grid, Media Queries
-- **Vanilla JavaScript (ES6+)**:
-  - Arrow functions
-  - Template literals
-  - Destructuring
-  - const/let
-  - Default parameters
-  - Spread operator
-  - Classes
-  - ES6 modules pattern
+- HTML5
+- CSS3
+- JavaScript
 
-### JavaScript Features Demonstrated
-- ✓ Variables (let, const)
-- ✓ Data Types (strings, numbers, objects, arrays)
-- ✓ Arrays (querySelectorAll, forEach, map, filter)
-- ✓ Objects (properties, methods)
-- ✓ Loops (forEach, for)
-- ✓ Functions (arrow functions, regular functions)
-- ✓ DOM Manipulation (classList, style, innerHTML)
-- ✓ Event Listeners (click, scroll, keydown, change)
-- ✓ ES6 Features (const, let, arrow functions, template literals)
+---
 
-## File Structure
+## Project Structure
 
 ```
 /
 ├── index.html       # Main HTML file
 ├── styles.css       # All CSS styling
 ├── script.js        # All JavaScript functionality
-└── README.md        # This file
+└── README.md        # Project documentation
 ```
 
-## Getting Started
+---
 
-### Option 1: Local Development
+## Installation
+
+### Run Locally
+
 ```bash
-# Navigate to project directory
-cd /path/to/portfolio
+# Clone the repository
+git clone https://github.com/shubham03kumar18-coder/Personal-Portfolio.git
+
+# Navigate into the project
+cd Personal-Portfolio
 
 # Start a local server (Python 3)
 python3 -m http.server 8000
 
-# Or using Node.js
-npx http-server
-
-# Open in browser
-http://localhost:8000
+# Open in your browser
+# http://localhost:8000
 ```
 
-### Option 2: GitHub Pages
-1. Create a GitHub repository
-2. Enable GitHub Pages in repository settings
-3. Upload the files (index.html, styles.css, script.js)
-4. Access at: `https://your-username.github.io/portfolio`
+---
 
-## Browser Support
+## Deployment
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+This project is hosted on Vercel. It can also be deployed to GitHub Pages:
 
-## Responsive Breakpoints
+1. Push the project files to a GitHub repository.
+2. Go to **Settings > Pages** in the repository.
+3. Set the source branch to `main` and folder to `/ (root)`.
+4. Your portfolio will be live at `https://your-username.github.io/Personal-Portfolio`.
 
-- Desktop: 1200px+
-- Tablet: 768px - 1199px
-- Mobile: < 768px
+---
 
-## Color Palette
+## Screenshots
 
-- Primary: #1a4d9e (Navy Blue)
-- Primary Dark: #0f2f5e
-- Primary Light: #2a5fbf
-- Accent: #3b82f6 (Blue)
-- Background: #fafbfc (Light)
-- Background Dark: #0f1419 (Dark mode)
+> Screenshots can be added here once the portfolio is live and finalized.
 
-## JavaScript Features Used
-
-### Hamburger Menu
-- Toggle mobile navigation
-- Animate hamburger icon
-- Close on link click
-- Close on Escape key
-
-### Smooth Scrolling
-- Navigate to sections
-- Track active section on scroll
-- Highlight active nav link
-
-### Animations
-- Intersection Observer for fade-in effects
-- Hover effects on cards and buttons
-- Smooth transitions throughout
-
-### Dark Mode
-- Automatic detection based on system preference
-- Custom CSS variables for theme switching
-- Smooth theme transitions
-
-### Performance
-- Debounce and throttle functions
-- Intersection Observer (lazy loading ready)
-- Optimized event listeners
-
-## Resume Download
-
-The resume PDF is available for download in the Resume section. Update the download link in `index.html` to point to your actual resume file.
-
-## Contact Information
-
-- **Email**: Shubham46845@gmail.com
-- **Phone**: +91 7428037001
-- **Location**: South Delhi, India
-- **LinkedIn**: https://www.linkedin.com/in/subham-kumar-888a98362/
-- **GitHub**: https://github.com/shubham03kumar18-coder
-
-## Project Links
-
-- **Tradeverse City**: https://tradeverse-website-enhancement5.vercel.app/
-- **Smart Parking Finder**: https://smart-parking-flame.vercel.app/
-
-## Customization
-
-### Update Personal Information
-Edit the following in `index.html`:
-- Name and title
-- Email and phone
-- Social media links
-- Project details
-- Skills and experience
-
-### Modify Colors
-Edit CSS variables in `styles.css`:
-```css
-:root {
-    --primary-color: #1a4d9e;
-    --accent-color: #3b82f6;
-    /* ... other variables */
-}
-```
-
-### Update Resume
-Replace the resume PDF link in the Resume section with your own file.
-
-## Performance Tips
-
-1. Optimize images before uploading
-2. Minify CSS and JavaScript for production
-3. Use CDN for hosting if possible
-4. Enable compression on server
-5. Test on various devices and browsers
-
-## Accessibility
-
-- Semantic HTML structure
-- Proper heading hierarchy
-- Alt text for images
-- Color contrast compliance
-- Keyboard navigation support
-
-## Best Practices Implemented
-
-- ✓ Semantic HTML
-- ✓ CSS Custom Properties
-- ✓ Mobile-First Design
-- ✓ Responsive Layout
-- ✓ Clean Code Structure
-- ✓ Performance Optimization
-- ✓ Accessibility Standards
-- ✓ Cross-browser Compatibility
-
-## Future Enhancements
-
-- Contact form with validation
-- Blog section
-- Project filtering
-- Search functionality
-- Analytics integration
-- Multi-language support
-
-## License
-
-This portfolio is open source and available for personal and professional use.
+---
 
 ## Author
 
 **Subham Kumar**
+
 - Pre-final year B.Tech Computer Science student
-- Full-Stack Developer with 8+ months production experience
+- Full-Stack Developer with 8+ months of production experience
 - Specialized in EdTech and location-based applications
+- Email: Shubham46845@gmail.com
+- LinkedIn: [subham-kumar-888a98362](https://www.linkedin.com/in/subham-kumar-888a98362/)
+- GitHub: [shubham03kumar18-coder](https://github.com/shubham03kumar18-coder)
 
 ---
 
-Built with ❤️ using HTML5, CSS3, and Vanilla JavaScript
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
