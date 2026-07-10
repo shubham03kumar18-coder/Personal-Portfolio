@@ -32,8 +32,8 @@ export default function Portfolio() {
           <div className="font-bold text-xl text-primary">Subham Kumar</div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-8">
-            {['about', 'projects', 'experience', 'skills', 'resume'].map((item) => (
+          <div className="hidden md:flex gap-6">
+            {['home', 'about', 'projects', 'experience', 'skills', 'education', 'resume', 'contact'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
@@ -57,11 +57,11 @@ export default function Portfolio() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-border bg-card">
             <div className="px-6 py-4 flex flex-col gap-4">
-              {['about', 'projects', 'experience', 'skills', 'resume'].map((item) => (
+              {['home', 'about', 'projects', 'experience', 'skills', 'education', 'resume', 'contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}
-                  className="text-sm font-medium hover:text-primary transition-colors capitalize"
+                  className="text-sm font-medium hover:text-primary transition-colors capitalize text-left"
                 >
                   {item}
                 </button>
@@ -72,18 +72,21 @@ export default function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative px-6 py-20 md:py-32 bg-gradient-to-b from-card to-background">
+      <section id="home" className="relative px-6 py-20 md:py-32 bg-gradient-to-b from-card to-background">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
             <div className="space-y-6">
               <div>
-                <p className="text-primary font-semibold text-sm mb-2 tracking-wide">FULL-STACK DEVELOPER</p>
-                <h1 className="text-5xl md:text-6xl font-bold text-pretty leading-tight">
-                  Building Digital Experiences
+                <p className="text-primary font-semibold text-sm mb-3 tracking-widest uppercase">Open to Internship Opportunities</p>
+                <h1 className="text-4xl md:text-5xl font-bold text-pretty leading-tight">
+                  {"Hi, I'm Subham Kumar"}
                 </h1>
-                <p className="text-lg text-muted-foreground mt-4 leading-relaxed">
-                  Pre-final B.Tech student specializing in EdTech and location-based applications. Proficient in modern tech stack with 8+ months of production experience.
+                <p className="text-lg font-semibold text-primary mt-3">
+                  Frontend Developer • Full-Stack Developer • Problem Solver
+                </p>
+                <p className="text-base text-muted-foreground mt-4 leading-relaxed">
+                  Building modern, scalable, and responsive web applications while continuously expanding my skills through real-world development.
                 </p>
               </div>
 
@@ -443,6 +446,33 @@ export default function Portfolio() {
         </div>
       </section>
 
+      {/* Education Section */}
+      <section id="education" className="px-6 py-16 md:py-24 bg-card/50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Education</h2>
+          <div className="bg-card border border-border rounded-xl p-8 hover:border-primary/50 transition-colors">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-primary">B.Tech in Computer Science & Information Technology</h3>
+                <p className="font-semibold text-foreground mt-1">MERI College of Engineering and Technology</p>
+                <p className="text-sm text-muted-foreground mt-1">New Delhi, India</p>
+              </div>
+              <div className="text-left md:text-right">
+                <p className="text-sm font-semibold text-primary whitespace-nowrap">2022 – 2026</p>
+                <p className="text-sm text-muted-foreground mt-1">Pre-Final Year</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {['Data Structures & Algorithms', 'Web Development', 'Database Management', 'Operating Systems', 'Computer Networks', 'Software Engineering'].map((subject) => (
+                <span key={subject} className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
+                  {subject}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Resume Section */}
       <section id="resume" className="px-6 py-16 md:py-24 bg-background">
         <div className="max-w-4xl mx-auto">
@@ -633,13 +663,8 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p>
-              Crafted with care by Subham Kumar. All rights reserved © {new Date().getFullYear()}.
-            </p>
-            <p>
-              Deployed on <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Vercel</a>
-            </p>
+          <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+            <p>Crafted with care by Subham Kumar. All rights reserved © {new Date().getFullYear()}.</p>
           </div>
         </div>
       </footer>
