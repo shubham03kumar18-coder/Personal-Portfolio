@@ -284,6 +284,25 @@ document.querySelectorAll('a[target="_blank"]').forEach(a => {
   a.setAttribute('rel', 'noopener noreferrer');
 });
 
+/* ── LOCAL STORAGE — last visited section ── */
+(function initLocalStorage() {
+  const secs = document.querySelectorAll('section[id]');
+
+  // Save last visited section on scroll
+  window.addEventListener('scroll', () => {
+    let current = 'home';
+    secs.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 200) current = sec.id;
+    });
+    localStorage.setItem('lastSection', current);
+  }, { passive: true });
+
+  // Restore last visited section on load
+  const last = localStorage.getItem('lastSection') || 'home';
+  const lastLink = document.querySelector(`.nav-link[data-section="${last}"]`);
+  if (lastLink) lastLink.classList.add('was-active');
+}());
+
 /* ── HERO ENTRANCE ANIMATION ── */
 window.addEventListener('load', () => {
   const heroText  = document.querySelector('.hero-text');

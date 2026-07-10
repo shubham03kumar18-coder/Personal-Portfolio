@@ -157,7 +157,33 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// ========== DARK MODE DETECTION ==========
+// ========== DARK MODE + LOCAL STORAGE ==========
+
+// Local Storage — save and restore last visited section
+function saveLastSection(section) {
+    localStorage.setItem('lastSection', section);
+}
+
+function getLastSection() {
+    return localStorage.getItem('lastSection') || 'home';
+}
+
+// Track active section and persist to localStorage
+const allSections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+    let current = 'home';
+    allSections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 200) {
+            current = sec.getAttribute('id');
+        }
+    });
+    saveLastSection(current);
+}, { passive: true });
+
+// Restore last section indicator on load
+const savedSection = getLastSection();
+const savedLink = document.querySelector(`.nav-link[href="#${savedSection}"]`);
+if (savedLink) savedLink.classList.add('was-active');
 
 // Check for dark mode preference
 const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -276,7 +302,7 @@ const portfolioOwner = 'Subham Kumar';
 let currentSection = 'home';
 
 // Data Types — string, number, boolean, array, object
-const skills = ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js'];
+const skills = ['HTML5', 'CSS3', 'JavaScript', 'ES6+', 'Responsive Design'];
 const portfolioData = {
     name: portfolioOwner,
     role: 'Full-Stack Developer',
@@ -294,7 +320,7 @@ const intro = `Hi, I'm ${name} — a ${role} with ${experience}+ months of exper
 
 // Array Methods — map, filter, forEach
 const techStack = skills.map(skill => skill.toUpperCase());
-const webTech = skills.filter(skill => skill !== 'Node.js');
+const webTech = skills.filter(skill => skill !== 'ES6+');
 
 // Loops — forEach iterating portfolio skills
 techStack.forEach(skill => {
