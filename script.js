@@ -132,8 +132,7 @@ window.addEventListener('scroll', () => {
 const downloadBtn = document.querySelector('.download-btn');
 if (downloadBtn) {
     downloadBtn.addEventListener('click', function(e) {
-        // The download attribute in HTML will handle it
-        console.log('[v0] Resume download initiated');
+        // The target="_blank" attribute in HTML will handle opening the PDF
     });
 }
 
@@ -270,22 +269,51 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ========== LOGGING FOR DEBUGGING ==========
+// ========== ES6+ CONCEPTS SHOWCASE ==========
 
-console.log('[v0] Portfolio loaded successfully');
-console.log('[v0] Mobile menu toggle available');
-console.log('[v0] Smooth scroll navigation active');
-console.log('[v0] Dark mode detection enabled');
+// Variables — const and let
+const portfolioOwner = 'Subham Kumar';
+let currentSection = 'home';
+
+// Data Types — string, number, boolean, array, object
+const skills = ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js'];
+const portfolioData = {
+    name: portfolioOwner,
+    role: 'Full-Stack Developer',
+    experience: 8,
+    projects: 2,
+    available: true
+};
+
+// Destructuring — object and array
+const { name, role, experience } = portfolioData;
+const [primarySkill, secondarySkill] = skills;
+
+// Template Literals
+const intro = `Hi, I'm ${name} — a ${role} with ${experience}+ months of experience.`;
+
+// Array Methods — map, filter, forEach
+const techStack = skills.map(skill => skill.toUpperCase());
+const webTech = skills.filter(skill => skill !== 'Node.js');
+
+// Loops — forEach iterating portfolio skills
+techStack.forEach(skill => {
+    // Each skill is available in the skills section
+});
+
+// Functions — named and arrow
+function getPortfolioSummary(data) {
+    return `${data.name} has built ${data.projects} live projects.`;
+}
+
+const formatSkill = (skill) => `• ${skill}`;
+const formattedSkills = skills.map(formatSkill);
 
 // ========== PAGE VISIBILITY OPTIMIZATION ==========
 
 // Handle page visibility changes
 document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        console.log('[v0] Page hidden - pausing animations');
-    } else {
-        console.log('[v0] Page visible - resuming animations');
-    }
+    // Pause or resume animations based on page visibility
 });
 
 // ========== END OF SCRIPT ==========
