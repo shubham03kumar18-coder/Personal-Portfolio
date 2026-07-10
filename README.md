@@ -9,10 +9,8 @@
 
 ## 🚀 Live Demo
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://your-portfolio-url.github.io)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://personal-portfolio-fedg9ufx1-shubhammmmmmmmm.vercel.app)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Source%20Code-222222?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shubham03kumar18-coder/Personal-Portfolio)
-
-> **Note:** Replace `https://your-portfolio-url.github.io` with your actual GitHub Pages URL once deployed.
 
 A premium, fully responsive portfolio website built with **pure HTML5, CSS3, and Vanilla JavaScript**.
 
