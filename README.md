@@ -1,5 +1,19 @@
 # Subham Kumar - Professional Portfolio
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Responsive](https://img.shields.io/badge/Responsive-Design-blue?style=for-the-badge&logo=google-chrome&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+## 🚀 Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://your-portfolio-url.github.io)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Source%20Code-222222?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shubham03kumar18-coder/Personal-Portfolio)
+
+> **Note:** Replace `https://your-portfolio-url.github.io` with your actual GitHub Pages URL once deployed.
+
 A premium, fully responsive portfolio website built with **pure HTML5, CSS3, and Vanilla JavaScript**.
 
 ## Project Overview
