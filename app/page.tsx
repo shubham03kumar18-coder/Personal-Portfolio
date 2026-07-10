@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Menu, X, Mail, ExternalLink, Code, Zap, Target, Download, FileText } from 'lucide-react';
 
 const GitHubIcon = () => (
@@ -14,6 +14,140 @@ const LinkedInIcon = () => (
     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.945v5.442h-3.554s.05-8.828 0-9.537h3.554v1.349c-.009.015-.021.029-.033.042h.033v-.042c.537-.827 1.496-2.007 3.644-2.007 2.661 0 4.649 1.737 4.649 5.475v4.72zM5.337 8.855c-1.144 0-1.915-.758-1.915-1.704 0-.955.77-1.704 1.956-1.704 1.187 0 1.915.749 1.948 1.704 0 .946-.761 1.704-1.989 1.704zm-1.66 11.597h3.321V9.915H3.677v9.537zM22.224 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.224 0z"/>
   </svg>
 );
+
+function TiltImage() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const currentTilt = useRef({ x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 });
+  const targetTilt = useRef({ x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 });
+  const isHovering = useRef(false);
+
+  // Lerp helper
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const applyTransform = useCallback(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const { x, y, scale, glowX, glowY } = currentTilt.current;
+    el.style.transform = `perspective(900px) rotateX(${x}deg) rotateY(${y}deg) scale3d(${scale},${scale},${scale})`;
+    el.style.boxShadow = `
+      ${-y * 0.8}px ${x * 0.8}px 30px rgba(37,99,235,0.35),
+      ${-y * 0.4}px ${x * 0.4}px 60px rgba(37,99,235,0.15),
+      0 20px 60px rgba(0,0,0,0.25)
+    `;
+    (el as HTMLElement & { style: CSSStyleDeclaration & { '--glow-x': string; '--glow-y': string } }).style['--glow-x'] = `${glowX}%`;
+    (el as HTMLElement & { style: CSSStyleDeclaration & { '--glow-y': string } }).style['--glow-y'] = `${glowY}%`;
+  }, []);
+
+  const animate = useCallback(() => {
+    const speed = isHovering.current ? 0.12 : 0.07;
+    const c = currentTilt.current;
+    const t = targetTilt.current;
+
+    c.x = lerp(c.x, t.x, speed);
+    c.y = lerp(c.y, t.y, speed);
+    c.scale = lerp(c.scale, t.scale, speed);
+    c.glowX = lerp(c.glowX, t.glowX, speed);
+    c.glowY = lerp(c.glowY, t.glowY, speed);
+
+    applyTransform();
+
+    const stillMoving =
+      Math.abs(c.x - t.x) > 0.005 ||
+      Math.abs(c.y - t.y) > 0.005 ||
+      Math.abs(c.scale - t.scale) > 0.0005;
+
+    if (stillMoving) {
+      rafRef.current = requestAnimationFrame(animate);
+    } else {
+      rafRef.current = null;
+    }
+  }, [applyTransform]);
+
+  const startRaf = useCallback(() => {
+    if (!rafRef.current) {
+      rafRef.current = requestAnimationFrame(animate);
+    }
+  }, [animate]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);   // -1 to 1
+    const dy = (e.clientY - cy) / (rect.height / 2);  // -1 to 1
+    const maxTilt = 14;
+
+    targetTilt.current = {
+      x: -dy * maxTilt,
+      y: dx * maxTilt,
+      scale: 1.04,
+      glowX: 50 + dx * 30,
+      glowY: 50 + dy * 30,
+    };
+    startRaf();
+  }, [startRaf]);
+
+  const handleMouseEnter = useCallback(() => {
+    isHovering.current = true;
+    targetTilt.current.scale = 1.04;
+    startRaf();
+  }, [startRaf]);
+
+  const handleMouseLeave = useCallback(() => {
+    isHovering.current = false;
+    targetTilt.current = { x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 };
+    startRaf();
+  }, [startRaf]);
+
+  // Cancel RAF on unmount
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="flex justify-center md:justify-end">
+      {/* Outer glow ring — not affected by tilt */}
+      <div className="relative w-64 h-64 md:w-80 md:h-80">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl" />
+
+        {/*
+          Tilt wrapper — only this element gets the 3D transform.
+          The [pointer:fine] media query makes the JS handler irrelevant on touch,
+          but we also guard via CSS will-change for perf.
+        */}
+        <div
+          ref={wrapperRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: '9999px',
+            willChange: 'transform',
+            transformStyle: 'preserve-3d',
+            transition: 'box-shadow 0.1s ease',
+            cursor: 'default',
+          }}
+          className="[pointer:coarse]:transform-none"
+        >
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-07-10%20at%2019.32.36-LNvbyqXeJnnD4d35H6p33KHNUKUXCs.jpeg"
+            alt="Subham Kumar - Full-Stack Developer"
+            draggable={false}
+            style={{ userSelect: 'none', pointerEvents: 'none' }}
+            className="w-full h-full object-cover rounded-full border-4 border-primary/30 shadow-2xl select-none"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -129,17 +263,8 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Right Column - Profile Image */}
-            <div className="flex justify-center md:justify-end">
-              <div className="relative w-64 h-64 md:w-80 md:h-80">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-07-10%20at%2019.32.36-LNvbyqXeJnnD4d35H6p33KHNUKUXCs.jpeg"
-                  alt="Subham Kumar - Full-Stack Developer"
-                  className="relative w-full h-full object-cover rounded-full border-4 border-primary/20 shadow-2xl"
-                />
-              </div>
-            </div>
+            {/* Right Column - Profile Image with 3D Tilt */}
+            <TiltImage />
           </div>
         </div>
       </section>
