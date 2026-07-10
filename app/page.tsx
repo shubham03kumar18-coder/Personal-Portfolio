@@ -17,135 +17,434 @@ const LinkedInIcon = () => (
 
 function TiltImage() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const currentTilt = useRef({ x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 });
-  const targetTilt = useRef({ x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 });
+  const rafRef    = useRef<number | null>(null);
+  const floatRaf  = useRef<number | null>(null);
+  const isMobile  = useRef(false);
   const isHovering = useRef(false);
+  const floatT     = useRef(0);
 
-  // Lerp helper
+  const cur = useRef({ rx: 0, ry: 0, scale: 1, gx: 50, gy: 50 });
+  const tgt = useRef({ rx: 0, ry: 0, scale: 1, gx: 50, gy: 50 });
+
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-  const applyTransform = useCallback(() => {
+  const commit = useCallback(() => {
     const el = wrapperRef.current;
     if (!el) return;
-    const { x, y, scale, glowX, glowY } = currentTilt.current;
-    el.style.transform = `perspective(900px) rotateX(${x}deg) rotateY(${y}deg) scale3d(${scale},${scale},${scale})`;
-    el.style.boxShadow = `
-      ${-y * 0.8}px ${x * 0.8}px 30px rgba(37,99,235,0.35),
-      ${-y * 0.4}px ${x * 0.4}px 60px rgba(37,99,235,0.15),
-      0 20px 60px rgba(0,0,0,0.25)
-    `;
-    (el as HTMLElement & { style: CSSStyleDeclaration & { '--glow-x': string; '--glow-y': string } }).style['--glow-x'] = `${glowX}%`;
-    (el as HTMLElement & { style: CSSStyleDeclaration & { '--glow-y': string } }).style['--glow-y'] = `${glowY}%`;
+    const { rx, ry, scale, gx, gy } = cur.current;
+    el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${scale})`;
+    const ox = -ry * 1.2;
+    const oy =  rx * 1.2;
+    el.style.boxShadow = [
+      `${ox}px ${oy}px 40px rgba(37,99,235,0.40)`,
+      `${ox * 0.5}px ${oy * 0.5}px 80px rgba(37,99,235,0.18)`,
+      `0 24px 64px rgba(0,0,0,0.22)`,
+    ].join(', ');
+    el.style.backgroundImage = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.07) 0%, transparent 65%)`;
   }, []);
 
-  const animate = useCallback(() => {
-    const speed = isHovering.current ? 0.12 : 0.07;
-    const c = currentTilt.current;
-    const t = targetTilt.current;
-
-    c.x = lerp(c.x, t.x, speed);
-    c.y = lerp(c.y, t.y, speed);
+  const tick = useCallback(() => {
+    const speed = isHovering.current ? 0.13 : 0.075;
+    const c = cur.current;
+    const t = tgt.current;
+    c.rx    = lerp(c.rx,    t.rx,    speed);
+    c.ry    = lerp(c.ry,    t.ry,    speed);
     c.scale = lerp(c.scale, t.scale, speed);
-    c.glowX = lerp(c.glowX, t.glowX, speed);
-    c.glowY = lerp(c.glowY, t.glowY, speed);
+    c.gx    = lerp(c.gx,    t.gx,    speed);
+    c.gy    = lerp(c.gy,    t.gy,    speed);
+    commit();
+    const moving =
+      Math.abs(c.rx - t.rx) > 0.004 ||
+      Math.abs(c.ry - t.ry) > 0.004 ||
+      Math.abs(c.scale - t.scale) > 0.0004;
+    if (moving) { rafRef.current = requestAnimationFrame(tick); }
+    else         { rafRef.current = null; }
+  }, [commit]);
 
-    applyTransform();
+  const kick = useCallback(() => {
+    if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+  }, [tick]);
 
-    const stillMoving =
-      Math.abs(c.x - t.x) > 0.005 ||
-      Math.abs(c.y - t.y) > 0.005 ||
-      Math.abs(c.scale - t.scale) > 0.0005;
+  /* idle float */
+  const float = useCallback(() => {
+    if (isHovering.current) { floatRaf.current = requestAnimationFrame(float); return; }
+    floatT.current += 0.012;
+    tgt.current.rx = Math.sin(floatT.current) * 3.5;
+    tgt.current.ry = Math.cos(floatT.current * 0.8) * 2.5;
+    kick();
+    floatRaf.current = requestAnimationFrame(float);
+  }, [kick]);
 
-    if (stillMoving) {
-      rafRef.current = requestAnimationFrame(animate);
-    } else {
-      rafRef.current = null;
-    }
-  }, [applyTransform]);
-
-  const startRaf = useCallback(() => {
-    if (!rafRef.current) {
-      rafRef.current = requestAnimationFrame(animate);
-    }
-  }, [animate]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile.current) return;
     const el = wrapperRef.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);   // -1 to 1
-    const dy = (e.clientY - cy) / (rect.height / 2);  // -1 to 1
-    const maxTilt = 14;
+    const r = el.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
+    const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+    tgt.current = { rx: -dy * 13, ry: dx * 13, scale: 1.03, gx: 50 + dx * 28, gy: 50 + dy * 28 };
+    kick();
+  }, [kick]);
 
-    targetTilt.current = {
-      x: -dy * maxTilt,
-      y: dx * maxTilt,
-      scale: 1.04,
-      glowX: 50 + dx * 30,
-      glowY: 50 + dy * 30,
-    };
-    startRaf();
-  }, [startRaf]);
-
-  const handleMouseEnter = useCallback(() => {
+  const onMouseEnter = useCallback(() => {
+    if (isMobile.current) return;
     isHovering.current = true;
-    targetTilt.current.scale = 1.04;
-    startRaf();
-  }, [startRaf]);
+    tgt.current.scale = 1.03;
+    kick();
+  }, [kick]);
 
-  const handleMouseLeave = useCallback(() => {
+  const onMouseLeave = useCallback(() => {
+    if (isMobile.current) return;
     isHovering.current = false;
-    targetTilt.current = { x: 0, y: 0, scale: 1, glowX: 50, glowY: 50 };
-    startRaf();
-  }, [startRaf]);
+    tgt.current = { rx: 0, ry: 0, scale: 1, gx: 50, gy: 50 };
+    kick();
+  }, [kick]);
 
-  // Cancel RAF on unmount
   useEffect(() => {
+    isMobile.current = window.matchMedia('(pointer: coarse)').matches;
+    if (!isMobile.current) floatRaf.current = requestAnimationFrame(float);
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current)   cancelAnimationFrame(rafRef.current);
+      if (floatRaf.current) cancelAnimationFrame(floatRaf.current);
     };
-  }, []);
+  }, [float]);
 
   return (
     <div className="flex justify-center md:justify-end">
-      {/* Outer glow ring — not affected by tilt */}
-      <div className="relative w-64 h-64 md:w-80 md:h-80">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl" />
+      {/* ambient glow behind card — untouched by tilt */}
+      <div className="relative" style={{ width: 320, maxWidth: '100%' }}>
+        <div
+          className="absolute -inset-6 rounded-3xl blur-3xl opacity-40"
+          style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.45), transparent 70%)' }}
+          aria-hidden="true"
+        />
 
-        {/*
-          Tilt wrapper — only this element gets the 3D transform.
-          The [pointer:fine] media query makes the JS handler irrelevant on touch,
-          but we also guard via CSS will-change for perf.
-        */}
+        {/* tilt card */}
         <div
           ref={wrapperRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseMove={onMouseMove}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: '9999px',
+            position: 'relative',
+            borderRadius: 22,
+            overflow: 'hidden',
             willChange: 'transform',
             transformStyle: 'preserve-3d',
-            transition: 'box-shadow 0.1s ease',
+            border: '1.5px solid rgba(37,99,235,0.30)',
             cursor: 'default',
+            lineHeight: 0,
           }}
-          className="[pointer:coarse]:transform-none"
         >
           <img
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-07-10%20at%2019.32.36-LNvbyqXeJnnD4d35H6p33KHNUKUXCs.jpeg"
             alt="Subham Kumar - Full-Stack Developer"
             draggable={false}
-            style={{ userSelect: 'none', pointerEvents: 'none' }}
-            className="w-full h-full object-cover rounded-full border-4 border-primary/30 shadow-2xl select-none"
+            style={{
+              width: '100%',
+              aspectRatio: '3 / 4',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              display: 'block',
+              userSelect: 'none',
+              pointerEvents: 'none',
+            }}
           />
+          {/* sheen overlay — moves with tilt via backgroundImage set in commit() */}
+          <div
+            style={{
+              position: 'absolute', inset: 0,
+              borderRadius: 22,
+              pointerEvents: 'none',
+            }}
+          />
+          {/* bottom name badge */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            padding: '28px 20px 18px',
+            background: 'linear-gradient(to top, rgba(10,14,26,0.88) 60%, transparent)',
+            borderBottomLeftRadius: 22,
+            borderBottomRightRadius: 22,
+          }}>
+            <p style={{ margin: 0, color: '#fff', fontWeight: 700, fontSize: 15, letterSpacing: '0.02em' }}>
+              Subham Kumar
+            </p>
+            <p style={{ margin: '3px 0 0', color: 'rgba(147,197,253,0.90)', fontSize: 12, fontWeight: 500 }}>
+              Full-Stack Developer
+            </p>
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   SKILLS DATA
+───────────────────────────────────────────── */
+const SKILL_GROUPS = [
+  {
+    category: 'Frontend',
+    accent: '#2563eb',
+    accentRgb: '37,99,235',
+    icon: '⬡',
+    skills: [
+      { name: 'React.js',         pct: 88 },
+      { name: 'Next.js 14',       pct: 85 },
+      { name: 'TypeScript',       pct: 80 },
+      { name: 'Tailwind CSS',     pct: 90 },
+      { name: 'JavaScript ES6+',  pct: 87 },
+      { name: 'HTML5 / CSS3',     pct: 92 },
+    ],
+  },
+  {
+    category: 'Backend & APIs',
+    accent: '#7c3aed',
+    accentRgb: '124,58,237',
+    icon: '⬡',
+    skills: [
+      { name: 'Node.js',              pct: 72 },
+      { name: 'REST APIs',            pct: 82 },
+      { name: 'Razorpay API',         pct: 78 },
+      { name: 'Google Maps API',      pct: 75 },
+      { name: 'WhatsApp Business API',pct: 70 },
+    ],
+  },
+  {
+    category: 'Databases & Auth',
+    accent: '#0891b2',
+    accentRgb: '8,145,178',
+    icon: '⬡',
+    skills: [
+      { name: 'Supabase',        pct: 80 },
+      { name: 'PostgreSQL',      pct: 70 },
+      { name: 'SQL',             pct: 75 },
+      { name: 'Authentication',  pct: 78 },
+    ],
+  },
+  {
+    category: 'Tools & Deploy',
+    accent: '#059669',
+    accentRgb: '5,150,105',
+    icon: '⬡',
+    skills: [
+      { name: 'Git / GitHub', pct: 88 },
+      { name: 'Vercel',       pct: 85 },
+      { name: 'Firebase',     pct: 68 },
+      { name: 'VS Code',      pct: 95 },
+      { name: 'npm',          pct: 82 },
+    ],
+  },
+];
+
+/* Individual animated skill row */
+function SkillBar({ name, pct, accent, accentRgb, delay, visible }: {
+  name: string; pct: number; accent: string; accentRgb: string; delay: number; visible: boolean;
+}) {
+  const barRef   = useRef<HTMLDivElement>(null);
+  const numRef   = useRef<HTMLSpanElement>(null);
+  const animated = useRef(false);
+
+  useEffect(() => {
+    if (!visible || animated.current) return;
+    animated.current = true;
+    const bar = barRef.current;
+    const num = numRef.current;
+    if (!bar || !num) return;
+
+    let start: number | null = null;
+    const duration = 900 + delay * 120;
+
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const prog = Math.min((ts - start) / duration, 1);
+      // ease out cubic
+      const ease = 1 - Math.pow(1 - prog, 3);
+      bar.style.width = `${ease * pct}%`;
+      num.textContent  = `${Math.round(ease * pct)}%`;
+      if (prog < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [visible, pct, delay]);
+
+  return (
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--foreground)' }}>{name}</span>
+        <span ref={numRef} style={{ fontSize: 12, fontWeight: 600, color: accent }}>0%</span>
+      </div>
+      <div style={{
+        height: 6, borderRadius: 99,
+        background: `rgba(${accentRgb},0.13)`,
+        overflow: 'hidden',
+      }}>
+        <div ref={barRef} style={{
+          height: '100%', width: '0%',
+          borderRadius: 99,
+          background: `linear-gradient(90deg, ${accent}cc, ${accent})`,
+          boxShadow: `0 0 8px rgba(${accentRgb},0.5)`,
+          transition: 'none',
+        }} />
+      </div>
+    </div>
+  );
+}
+
+/* Individual skill card with 3D tilt */
+function SkillCard({ group, index, visible }: {
+  group: typeof SKILL_GROUPS[0]; index: number; visible: boolean;
+}) {
+  const cardRef    = useRef<HTMLDivElement>(null);
+  const rafRef     = useRef<number | null>(null);
+  const cur        = useRef({ rx: 0, ry: 0 });
+  const tgt        = useRef({ rx: 0, ry: 0 });
+  const hovering   = useRef(false);
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const commit = useCallback(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const { rx, ry } = cur.current;
+    el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(${hovering.current ? -6 : 0}px)`;
+    el.style.boxShadow = hovering.current
+      ? `${-ry * 0.8}px ${rx * 0.8}px 28px rgba(${group.accentRgb},0.28), 0 12px 40px rgba(0,0,0,0.16)`
+      : `0 2px 12px rgba(0,0,0,0.08)`;
+  }, [group.accentRgb]);
+
+  const tick = useCallback(() => {
+    const speed = hovering.current ? 0.14 : 0.08;
+    cur.current.rx = lerp(cur.current.rx, tgt.current.rx, speed);
+    cur.current.ry = lerp(cur.current.ry, tgt.current.ry, speed);
+    commit();
+    const moving = Math.abs(cur.current.rx - tgt.current.rx) > 0.003 ||
+                   Math.abs(cur.current.ry - tgt.current.ry) > 0.003;
+    if (moving) { rafRef.current = requestAnimationFrame(tick); }
+    else         { rafRef.current = null; }
+  }, [commit]);
+
+  const kick = useCallback(() => {
+    if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+  }, [tick]);
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia('(pointer:coarse)').matches) return;
+    const el = cardRef.current;
+    if (!el) return;
+    const r  = el.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
+    const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+    tgt.current = { rx: -dy * 8, ry: dx * 8 };
+    kick();
+  }, [kick]);
+
+  const onEnter = useCallback(() => {
+    if (window.matchMedia('(pointer:coarse)').matches) return;
+    hovering.current = true; kick();
+  }, [kick]);
+
+  const onLeave = useCallback(() => {
+    hovering.current = false;
+    tgt.current = { rx: 0, ry: 0 };
+    kick();
+  }, [kick]);
+
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+
+  const slideStyle: React.CSSProperties = {
+    opacity:   visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(32px)',
+    transition: `opacity 0.55s ease ${index * 0.1}s, transform 0.55s ease ${index * 0.1}s`,
+  };
+
+  return (
+    <div style={slideStyle}>
+      <div
+        ref={cardRef}
+        onMouseMove={onMove}
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        style={{
+          background: 'var(--card)',
+          borderRadius: 16,
+          padding: '22px 22px 18px',
+          border: `1.5px solid rgba(${group.accentRgb},0.22)`,
+          willChange: 'transform',
+          transformStyle: 'preserve-3d',
+          cursor: 'default',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* animated gradient border shimmer */}
+        <div style={{
+          position: 'absolute', inset: 0, borderRadius: 16, pointerEvents: 'none',
+          background: `linear-gradient(135deg, rgba(${group.accentRgb},0.12) 0%, transparent 50%, rgba(${group.accentRgb},0.06) 100%)`,
+        }} />
+
+        {/* category header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: 8,
+            background: `rgba(${group.accentRgb},0.15)`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 16, color: group.accent,
+            boxShadow: `0 0 10px rgba(${group.accentRgb},0.25)`,
+          }}>
+            {'</>'[index % 3] || '<>'}
+          </div>
+          <span style={{
+            fontSize: 12, fontWeight: 700, letterSpacing: '0.08em',
+            textTransform: 'uppercase', color: group.accent,
+          }}>
+            {group.category}
+          </span>
+        </div>
+
+        {/* skill bars */}
+        {group.skills.map((s, i) => (
+          <SkillBar
+            key={s.name}
+            name={s.name}
+            pct={s.pct}
+            accent={group.accent}
+            accentRgb={group.accentRgb}
+            delay={index * group.skills.length + i}
+            visible={visible}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Skills section — observes viewport entry */
+function SkillsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section id="skills" ref={sectionRef} className="px-6 py-16 md:py-24 bg-card/50">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Skills</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {SKILL_GROUPS.map((g, i) => (
+            <SkillCard key={g.category} group={g} index={i} visible={visible} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -519,57 +818,7 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="px-6 py-16 md:py-24 bg-card/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Skills</h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <p className="font-bold text-primary mb-3 uppercase text-sm tracking-wide">Frontend</p>
-              <div className="flex flex-wrap gap-2">
-                {['React.js', 'Next.js 14', 'TypeScript', 'Tailwind CSS', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Bootstrap'].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <p className="font-bold text-secondary mb-3 uppercase text-sm tracking-wide">Backend & APIs</p>
-              <div className="flex flex-wrap gap-2">
-                {['Node.js', 'REST APIs', 'Razorpay API', 'Google Maps API', 'WhatsApp Business API'].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded-full font-medium">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <p className="font-bold text-accent mb-3 uppercase text-sm tracking-wide">Databases & Auth</p>
-              <div className="flex flex-wrap gap-2">
-                {['Supabase', 'PostgreSQL', 'SQL', 'Authentication'].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-accent/10 text-accent text-xs rounded-full font-medium">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <p className="font-bold text-primary mb-3 uppercase text-sm tracking-wide">Tools & Deployment</p>
-              <div className="flex flex-wrap gap-2">
-                {['Vercel', 'Git', 'GitHub', 'Firebase', 'npm', 'VS Code'].map((skill) => (
-                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <SkillsSection />
 
       {/* Education Section */}
       <section id="education" className="px-6 py-16 md:py-24 bg-card/50">
