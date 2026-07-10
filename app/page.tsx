@@ -158,21 +158,6 @@ function TiltImage() {
               pointerEvents: 'none',
             }}
           />
-          {/* bottom name badge */}
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0,
-            padding: '28px 20px 18px',
-            background: 'linear-gradient(to top, rgba(10,14,26,0.88) 60%, transparent)',
-            borderBottomLeftRadius: 22,
-            borderBottomRightRadius: 22,
-          }}>
-            <p style={{ margin: 0, color: '#fff', fontWeight: 700, fontSize: 15, letterSpacing: '0.02em' }}>
-              Subham Kumar
-            </p>
-            <p style={{ margin: '3px 0 0', color: 'rgba(147,197,253,0.90)', fontSize: 12, fontWeight: 500 }}>
-              Full-Stack Developer
-            </p>
-          </div>
         </div>
       </div>
     </div>
@@ -180,125 +165,91 @@ function TiltImage() {
 }
 
 /* ─────────────────────────────────────────────
-   SKILLS DATA
+   SKILLS DATA  (no percentages)
 ───────────────────────────────────────────── */
 const SKILL_GROUPS = [
   {
     category: 'Frontend',
     accent: '#2563eb',
     accentRgb: '37,99,235',
-    icon: '⬡',
+    categoryIcon: (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
     skills: [
-      { name: 'React.js',         pct: 88 },
-      { name: 'Next.js 14',       pct: 85 },
-      { name: 'TypeScript',       pct: 80 },
-      { name: 'Tailwind CSS',     pct: 90 },
-      { name: 'JavaScript ES6+',  pct: 87 },
-      { name: 'HTML5 / CSS3',     pct: 92 },
+      { name: 'React.js',        icon: '⚛' },
+      { name: 'Next.js 14',      icon: '▲' },
+      { name: 'TypeScript',      icon: 'TS' },
+      { name: 'Tailwind CSS',    icon: '🌊' },
+      { name: 'JavaScript ES6+', icon: 'JS' },
+      { name: 'HTML5 / CSS3',    icon: '#' },
+      { name: 'Bootstrap',       icon: 'B' },
     ],
   },
   {
     category: 'Backend & APIs',
     accent: '#7c3aed',
     accentRgb: '124,58,237',
-    icon: '⬡',
+    categoryIcon: (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+    ),
     skills: [
-      { name: 'Node.js',              pct: 72 },
-      { name: 'REST APIs',            pct: 82 },
-      { name: 'Razorpay API',         pct: 78 },
-      { name: 'Google Maps API',      pct: 75 },
-      { name: 'WhatsApp Business API',pct: 70 },
+      { name: 'Node.js',               icon: '⬡' },
+      { name: 'REST APIs',             icon: '⇄' },
+      { name: 'Razorpay API',          icon: '₹' },
+      { name: 'Google Maps API',       icon: '📍' },
+      { name: 'WhatsApp Business API', icon: '💬' },
     ],
   },
   {
     category: 'Databases & Auth',
     accent: '#0891b2',
     accentRgb: '8,145,178',
-    icon: '⬡',
+    categoryIcon: (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+      </svg>
+    ),
     skills: [
-      { name: 'Supabase',        pct: 80 },
-      { name: 'PostgreSQL',      pct: 70 },
-      { name: 'SQL',             pct: 75 },
-      { name: 'Authentication',  pct: 78 },
+      { name: 'Supabase',       icon: '⚡' },
+      { name: 'PostgreSQL',     icon: '🐘' },
+      { name: 'SQL',            icon: '∑' },
+      { name: 'Firebase',       icon: '🔥' },
+      { name: 'Authentication', icon: '🔐' },
     ],
   },
   {
     category: 'Tools & Deploy',
     accent: '#059669',
     accentRgb: '5,150,105',
-    icon: '⬡',
+    categoryIcon: (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+      </svg>
+    ),
     skills: [
-      { name: 'Git / GitHub', pct: 88 },
-      { name: 'Vercel',       pct: 85 },
-      { name: 'Firebase',     pct: 68 },
-      { name: 'VS Code',      pct: 95 },
-      { name: 'npm',          pct: 82 },
+      { name: 'Git',      icon: '⎇' },
+      { name: 'GitHub',   icon: '🐙' },
+      { name: 'Vercel',   icon: '▲' },
+      { name: 'VS Code',  icon: '⌥' },
+      { name: 'npm',      icon: '⬡' },
+      { name: 'Figma',    icon: '✦' },
     ],
   },
-];
+] as const;
 
-/* Individual animated skill row */
-function SkillBar({ name, pct, accent, accentRgb, delay, visible }: {
-  name: string; pct: number; accent: string; accentRgb: string; delay: number; visible: boolean;
-}) {
-  const barRef   = useRef<HTMLDivElement>(null);
-  const numRef   = useRef<HTMLSpanElement>(null);
-  const animated = useRef(false);
-
-  useEffect(() => {
-    if (!visible || animated.current) return;
-    animated.current = true;
-    const bar = barRef.current;
-    const num = numRef.current;
-    if (!bar || !num) return;
-
-    let start: number | null = null;
-    const duration = 900 + delay * 120;
-
-    const step = (ts: number) => {
-      if (!start) start = ts;
-      const prog = Math.min((ts - start) / duration, 1);
-      // ease out cubic
-      const ease = 1 - Math.pow(1 - prog, 3);
-      bar.style.width = `${ease * pct}%`;
-      num.textContent  = `${Math.round(ease * pct)}%`;
-      if (prog < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [visible, pct, delay]);
-
-  return (
-    <div style={{ marginBottom: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--foreground)' }}>{name}</span>
-        <span ref={numRef} style={{ fontSize: 12, fontWeight: 600, color: accent }}>0%</span>
-      </div>
-      <div style={{
-        height: 6, borderRadius: 99,
-        background: `rgba(${accentRgb},0.13)`,
-        overflow: 'hidden',
-      }}>
-        <div ref={barRef} style={{
-          height: '100%', width: '0%',
-          borderRadius: 99,
-          background: `linear-gradient(90deg, ${accent}cc, ${accent})`,
-          boxShadow: `0 0 8px rgba(${accentRgb},0.5)`,
-          transition: 'none',
-        }} />
-      </div>
-    </div>
-  );
-}
-
-/* Individual skill card with 3D tilt */
+/* Individual skill card with 3D tilt + icon chips */
 function SkillCard({ group, index, visible }: {
-  group: typeof SKILL_GROUPS[0]; index: number; visible: boolean;
+  group: typeof SKILL_GROUPS[number]; index: number; visible: boolean;
 }) {
-  const cardRef    = useRef<HTMLDivElement>(null);
-  const rafRef     = useRef<number | null>(null);
-  const cur        = useRef({ rx: 0, ry: 0 });
-  const tgt        = useRef({ rx: 0, ry: 0 });
-  const hovering   = useRef(false);
+  const cardRef  = useRef<HTMLDivElement>(null);
+  const rafRef   = useRef<number | null>(null);
+  const cur      = useRef({ rx: 0, ry: 0 });
+  const tgt      = useRef({ rx: 0, ry: 0 });
+  const hovering = useRef(false);
 
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -306,10 +257,10 @@ function SkillCard({ group, index, visible }: {
     const el = cardRef.current;
     if (!el) return;
     const { rx, ry } = cur.current;
-    el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(${hovering.current ? -6 : 0}px)`;
+    el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(${hovering.current ? -7 : 0}px)`;
     el.style.boxShadow = hovering.current
-      ? `${-ry * 0.8}px ${rx * 0.8}px 28px rgba(${group.accentRgb},0.28), 0 12px 40px rgba(0,0,0,0.16)`
-      : `0 2px 12px rgba(0,0,0,0.08)`;
+      ? `${-ry * 0.9}px ${rx * 0.9}px 32px rgba(${group.accentRgb},0.30), 0 14px 44px rgba(0,0,0,0.14)`
+      : `0 2px 14px rgba(0,0,0,0.07)`;
   }, [group.accentRgb]);
 
   const tick = useCallback(() => {
@@ -340,7 +291,8 @@ function SkillCard({ group, index, visible }: {
 
   const onEnter = useCallback(() => {
     if (window.matchMedia('(pointer:coarse)').matches) return;
-    hovering.current = true; kick();
+    hovering.current = true;
+    kick();
   }, [kick]);
 
   const onLeave = useCallback(() => {
@@ -351,14 +303,12 @@ function SkillCard({ group, index, visible }: {
 
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
 
-  const slideStyle: React.CSSProperties = {
-    opacity:   visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(32px)',
-    transition: `opacity 0.55s ease ${index * 0.1}s, transform 0.55s ease ${index * 0.1}s`,
-  };
-
   return (
-    <div style={slideStyle}>
+    <div style={{
+      opacity:   visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(30px)',
+      transition: `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`,
+    }}>
       <div
         ref={cardRef}
         onMouseMove={onMove}
@@ -366,54 +316,85 @@ function SkillCard({ group, index, visible }: {
         onMouseLeave={onLeave}
         style={{
           background: 'var(--card)',
-          borderRadius: 16,
-          padding: '22px 22px 18px',
-          border: `1.5px solid rgba(${group.accentRgb},0.22)`,
+          borderRadius: 18,
+          padding: '22px 20px 20px',
+          border: `1.5px solid rgba(${group.accentRgb},0.20)`,
           willChange: 'transform',
           transformStyle: 'preserve-3d',
           cursor: 'default',
           position: 'relative',
           overflow: 'hidden',
+          height: '100%',
         }}
       >
-        {/* animated gradient border shimmer */}
+        {/* inner gradient shimmer */}
         <div style={{
-          position: 'absolute', inset: 0, borderRadius: 16, pointerEvents: 'none',
-          background: `linear-gradient(135deg, rgba(${group.accentRgb},0.12) 0%, transparent 50%, rgba(${group.accentRgb},0.06) 100%)`,
-        }} />
+          position: 'absolute', inset: 0, borderRadius: 18, pointerEvents: 'none',
+          background: `linear-gradient(135deg, rgba(${group.accentRgb},0.10) 0%, transparent 55%, rgba(${group.accentRgb},0.05) 100%)`,
+        }} aria-hidden="true" />
 
         {/* category header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, position: 'relative' }}>
           <div style={{
-            width: 32, height: 32, borderRadius: 8,
-            background: `rgba(${group.accentRgb},0.15)`,
+            width: 34, height: 34, borderRadius: 9, flexShrink: 0,
+            background: `rgba(${group.accentRgb},0.14)`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, color: group.accent,
-            boxShadow: `0 0 10px rgba(${group.accentRgb},0.25)`,
+            color: group.accent,
+            boxShadow: `0 0 12px rgba(${group.accentRgb},0.22)`,
           }}>
-            {'</>'[index % 3] || '<>'}
+            {group.categoryIcon}
           </div>
           <span style={{
-            fontSize: 12, fontWeight: 700, letterSpacing: '0.08em',
-            textTransform: 'uppercase', color: group.accent,
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.09em',
+            textTransform: 'uppercase', color: group.accent, lineHeight: 1.2,
           }}>
             {group.category}
           </span>
         </div>
 
-        {/* skill bars */}
-        {group.skills.map((s, i) => (
-          <SkillBar
-            key={s.name}
-            name={s.name}
-            pct={s.pct}
-            accent={group.accent}
-            accentRgb={group.accentRgb}
-            delay={index * group.skills.length + i}
-            visible={visible}
-          />
-        ))}
+        {/* skill chips */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, position: 'relative' }}>
+          {group.skills.map((s) => (
+            <SkillChip key={s.name} name={s.name} icon={s.icon} accent={group.accent} accentRgb={group.accentRgb} />
+          ))}
+        </div>
       </div>
+    </div>
+  );
+}
+
+/* Interactive skill chip */
+function SkillChip({ name, icon, accent, accentRgb }: {
+  name: string; icon: string; accent: string; accentRgb: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        padding: '5px 10px', borderRadius: 8,
+        background: hovered ? `rgba(${accentRgb},0.14)` : `rgba(${accentRgb},0.07)`,
+        border: `1px solid ${hovered ? `rgba(${accentRgb},0.45)` : `rgba(${accentRgb},0.18)`}`,
+        cursor: 'default',
+        transition: 'background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s',
+        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+        boxShadow: hovered ? `0 4px 14px rgba(${accentRgb},0.22)` : 'none',
+      }}
+    >
+      <span style={{
+        fontSize: 11, lineHeight: 1, color: accent,
+        fontWeight: 700, minWidth: 14, textAlign: 'center',
+        transition: 'transform 0.18s',
+        transform: hovered ? 'scale(1.15)' : 'scale(1)',
+        display: 'inline-block',
+      }}>
+        {icon}
+      </span>
+      <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--foreground)', whiteSpace: 'nowrap' }}>
+        {name}
+      </span>
     </div>
   );
 }
