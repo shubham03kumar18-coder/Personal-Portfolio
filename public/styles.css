@@ -713,7 +713,20 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 }
 
 .resume-download-area{
-  text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.resume-btn-row{
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;
+}
+.btn-outline{
+  background:transparent;
+  color:var(--blue-light);
+  border:1.5px solid rgba(37,99,235,0.45);
+}
+.btn-outline:hover{
+  background:rgba(37,99,235,0.10);
+  border-color:var(--blue-light);
+  box-shadow:0 6px 24px var(--blue-glow);
 }
 .resume-note{font-size:13px;color:var(--text-3)}
 
