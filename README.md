@@ -13,7 +13,7 @@ A professional, fully responsive personal portfolio website built with pure **HT
 
 ## Live Demo
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://personal-portfolio-j4dwrgjh0-shubhammmmmmmmm.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-1a4d9e?style=for-the-badge&logo=vercel&logoColor=white)](https://subham-kumar-personal-portfolio.vercel.app/)
 
 ## GitHub Repository
 
@@ -84,7 +84,7 @@ This project is hosted on Vercel. It can also be deployed to **GitHub Pages**:
 
 ## Screenshots
 
-> Screenshots will be added once finalized. Visit the [Live Demo](https://personal-portfolio-j4dwrgjh0-shubhammmmmmmmm.vercel.app) to see the portfolio in action.
+> Screenshots will be added once finalized. Visit the [Live Demo](https://subham-kumar-personal-portfolio.vercel.app/) to see the portfolio in action.
 
 ---
 
