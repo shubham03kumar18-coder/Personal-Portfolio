@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X, Mail, ExternalLink, Code, Zap, Target } from 'lucide-react';
+import { Menu, X, Mail, ExternalLink, Code, Zap, Target, Download, FileText } from 'lucide-react';
 
 const GitHubIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +33,7 @@ export default function Portfolio() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex gap-8">
-            {['about', 'projects', 'experience', 'skills'].map((item) => (
+            {['about', 'projects', 'experience', 'skills', 'resume'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
@@ -57,7 +57,7 @@ export default function Portfolio() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-border bg-card">
             <div className="px-6 py-4 flex flex-col gap-4">
-              {['about', 'projects', 'experience', 'skills'].map((item) => (
+              {['about', 'projects', 'experience', 'skills', 'resume'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}
@@ -78,7 +78,7 @@ export default function Portfolio() {
             {/* Left Column - Content */}
             <div className="space-y-6">
               <div>
-                <p className="text-primary font-semibold text-sm mb-2">FULL-STACK DEVELOPER</p>
+                <p className="text-primary font-semibold text-sm mb-2 tracking-wide">FULL-STACK DEVELOPER</p>
                 <h1 className="text-5xl md:text-6xl font-bold text-pretty leading-tight">
                   Building Digital Experiences
                 </h1>
@@ -91,7 +91,10 @@ export default function Portfolio() {
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href="#contact"
-                  onClick={() => scrollToSection('contact')}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('contact');
+                  }}
                   className="px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
                 >
                   Get in Touch
@@ -111,25 +114,26 @@ export default function Portfolio() {
               </div>
 
               {/* Quick Info */}
-              <div className="pt-4 flex gap-6 text-sm">
-                <div>
-                  <p className="text-muted-foreground">Location</p>
-                  <p className="font-semibold">South Delhi, India</p>
+              <div className="flex flex-col gap-3 pt-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                  South Delhi, India
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Experience</p>
-                  <p className="font-semibold">8+ Months</p>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                  Available for Full-Stack & Frontend Roles
                 </div>
               </div>
             </div>
 
             {/* Right Column - Profile Image */}
-            <div className="flex justify-center">
-              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-2xl overflow-hidden border-4 border-primary shadow-2xl">
+            <div className="flex justify-center md:justify-end">
+              <div className="relative w-64 h-64 md:w-80 md:h-80">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-07-10%20at%2019.32.36-LNvbyqXeJnnD4d35H6p33KHNUKUXCs.jpeg"
-                  alt="Subham Kumar"
-                  className="w-full h-full object-cover"
+                  alt="Subham Kumar - Full-Stack Developer"
+                  className="relative w-full h-full object-cover rounded-full border-4 border-primary/20 shadow-2xl"
                 />
               </div>
             </div>
@@ -138,143 +142,91 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="px-6 py-20">
+      <section id="about" className="px-6 py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">About Me</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">About Me</h2>
           
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I&apos;m a pre-final year full-stack developer with a passion for building scalable web applications. My expertise lies in creating responsive user interfaces and robust backend systems using modern technologies.
-              </p>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                With 8+ months of production experience, I&apos;ve successfully delivered projects in EdTech and location-based services. I specialize in payment integration, real-time data synchronization, and building user-centric applications.
-              </p>
-
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Currently pursuing B.Tech in Computer Science & Information Technology. When not coding, I&apos;m exploring new technologies and contributing to open-source projects.
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <Code className="text-primary" size={24} />
+                <h3 className="font-semibold text-lg">Full-Stack Development</h3>
+              </div>
+              <p className="text-muted-foreground">
+                Building production-grade applications with modern tech stack: Next.js 14, React, TypeScript, and Supabase.
               </p>
             </div>
 
-            <div className="space-y-8">
-              <div className="p-6 bg-card border border-border rounded-xl">
-                <Code className="text-primary mb-4" size={32} />
-                <h3 className="text-xl font-bold mb-2">Full-Stack Development</h3>
-                <p className="text-muted-foreground">Frontend + Backend + Database integration with modern frameworks and best practices.</p>
+            <div className="p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <Zap className="text-primary" size={24} />
+                <h3 className="font-semibold text-lg">Performance Focused</h3>
               </div>
+              <p className="text-muted-foreground">
+                Optimizing for speed, accessibility, and user experience. Deployed projects on Vercel with SEO optimization.
+              </p>
+            </div>
 
-              <div className="p-6 bg-card border border-border rounded-xl">
-                <Zap className="text-primary mb-4" size={32} />
-                <h3 className="text-xl font-bold mb-2">Performance Focused</h3>
-                <p className="text-muted-foreground">Building fast, accessible, and scalable applications optimized for user experience.</p>
+            <div className="p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <Target className="text-primary" size={24} />
+                <h3 className="font-semibold text-lg">Problem Solving</h3>
               </div>
-
-              <div className="p-6 bg-card border border-border rounded-xl">
-                <Target className="text-primary mb-4" size={32} />
-                <h3 className="text-xl font-bold mb-2">Problem Solving</h3>
-                <p className="text-muted-foreground">Translating business requirements into elegant technical solutions with measurable impact.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="px-6 py-20 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Skills & Expertise</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Frontend */}
-            <div>
-              <h3 className="text-xl font-bold text-primary mb-4">Frontend Mastery</h3>
-              <p className="text-sm text-muted-foreground mb-4">React.js, Next.js 14, TypeScript, Tailwind CSS</p>
-              <p className="text-muted-foreground">Used in Tradeverse City, Smart Parking, and multiple client projects.</p>
-            </div>
-
-            {/* Backend */}
-            <div>
-              <h3 className="text-xl font-bold text-primary mb-4">Backend & APIs</h3>
-              <p className="text-sm text-muted-foreground mb-4">Node.js, REST APIs, Payment Gateway (Razorpay)</p>
-              <p className="text-muted-foreground">Built course enrollment systems, booking platforms, and real-time APIs.</p>
-            </div>
-
-            {/* Databases */}
-            <div>
-              <h3 className="text-xl font-bold text-primary mb-4">Databases & Auth</h3>
-              <p className="text-sm text-muted-foreground mb-4">Supabase, PostgreSQL, User Authentication</p>
-              <p className="text-muted-foreground">Implemented session management, real-time sync, and secure data handling.</p>
-            </div>
-
-            {/* Tools */}
-            <div>
-              <h3 className="text-xl font-bold text-primary mb-4">Tools & Deployment</h3>
-              <p className="text-sm text-muted-foreground mb-4">Vercel (CI/CD), Git, Firebase, npm/pnpm</p>
-              <p className="text-muted-foreground">Experienced with modern DevOps workflows and deployment pipelines.</p>
+              <p className="text-muted-foreground">
+                Creative solutions for real-world problems. Experience integrating payment gateways, APIs, and real-time data sync.
+              </p>
             </div>
           </div>
 
-          {/* Additional Skills */}
-          <div className="mt-12 p-8 bg-background rounded-xl border border-border">
-            <h3 className="text-lg font-bold mb-4">Core Competencies</h3>
-            <div className="flex flex-wrap gap-2">
-              {['Responsive Design', 'Mobile-First', '100% Cross-Browser', 'RESTful APIs', 'Real-Time Sync', 'Payment Integration', 'Authentication', 'Database Design', 'Performance Optimization', 'Git & Version Control'].map((skill) => (
-                <span key={skill} className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                  {skill}
-                </span>
-              ))}
-            </div>
+          {/* Professional Summary */}
+          <div className="bg-card border border-border rounded-xl p-8">
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              I&apos;m a pre-final year B.Tech student specializing in full-stack and frontend web development. With <strong>8+ months of production experience</strong>, I&apos;ve built scalable applications serving real users. My expertise spans modern frontend frameworks (React, Next.js), backend development (Node.js, REST APIs), and cloud deployment (Vercel, Supabase). I&apos;m passionate about writing clean code, collaborating in agile environments, and delivering exceptional user experiences.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="px-6 py-20">
+      <section id="projects" className="px-6 py-16 md:py-24 bg-card/50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Featured Projects</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Featured Projects</h2>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Project 1: Tradeverse City */}
-            <div className="group border border-border rounded-xl overflow-hidden bg-card hover:border-primary transition-colors">
-              <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                <div className="text-center">
-                  <Code size={48} className="text-primary mx-auto mb-4" />
-                  <p className="font-semibold">EdTech Platform</p>
+            {/* Project 1 - Tradeverse City */}
+            <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors group">
+              <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center overflow-hidden relative">
+                <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+                <div className="relative z-10 text-center">
+                  <Code size={48} className="text-primary/50 mx-auto mb-2" />
+                  <p className="text-sm font-semibold text-muted-foreground">Tradeverse City</p>
                 </div>
               </div>
-              
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Tradeverse City</h3>
-                <p className="text-muted-foreground mb-4">
-                  Full-stack EdTech platform with real-time market data integration and secure payment processing.
-                </p>
+                <p className="text-sm text-muted-foreground mb-4">Full-Stack EdTech Web Platform</p>
                 
-                <div className="mb-4">
-                  <p className="text-sm font-semibold text-primary mb-2">Problem Solved</p>
-                  <p className="text-sm text-muted-foreground">Stock market education lacked real-time data and smooth payment flows.</p>
+                <div className="space-y-3 mb-6">
+                  <div>
+                    <p className="text-sm font-semibold text-primary mb-2">Problem</p>
+                    <p className="text-sm text-muted-foreground">Stock market education platforms lack real-time data and smooth payment flows.</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-primary mb-2">Solution</p>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>✓ Real-time NIFTY/SENSEX ticker display</li>
+                      <li>✓ Razorpay payment integration for course enrollment</li>
+                      <li>✓ WhatsApp Business API for lead capture</li>
+                      <li>✓ Supabase for authentication & data sync</li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-primary mb-2">Solution</p>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Real-time NIFTY/SENSEX ticker updates</li>
-                    <li>• Razorpay payment integration</li>
-                    <li>• WhatsApp Business API integration</li>
-                    <li>• Responsive dark-themed UI</li>
-                  </ul>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-primary mb-2">Impact</p>
-                  <p className="text-sm text-muted-foreground">Deployed live on Vercel, 100% cross-browser compatibility, professional user experience.</p>
-                </div>
-
-                <div className="mb-4">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase mb-3">Tech Stack</p>
+                  <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">Tech Stack</p>
                   <div className="flex flex-wrap gap-2">
-                    {['Next.js 14', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Razorpay API'].map((tech) => (
-                      <span key={tech} className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
+                    {['Next.js 14', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Razorpay'].map((tech) => (
+                      <span key={tech} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
                         {tech}
                       </span>
                     ))}
@@ -282,6 +234,15 @@ export default function Portfolio() {
                 </div>
 
                 <div className="flex gap-3">
+                  <a
+                    href="https://tradeverse-website-enhancement5.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink size={16} />
+                    Live Demo
+                  </a>
                   <a
                     href="https://github.com/shubham03kumar18-coder"
                     target="_blank"
@@ -293,57 +254,44 @@ export default function Portfolio() {
                     </div>
                     Code
                   </a>
-                  <a
-                    href="#"
-                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink size={16} />
-                    Demo
-                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Project 2: Smart Parking */}
-            <div className="group border border-border rounded-xl overflow-hidden bg-card hover:border-primary transition-colors">
-              <div className="h-48 bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center">
-                <div className="text-center">
-                  <Target size={48} className="text-secondary mx-auto mb-4" />
-                  <p className="font-semibold">Location Services</p>
+            {/* Project 2 - Smart Parking */}
+            <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors group">
+              <div className="h-48 bg-gradient-to-br from-secondary/10 to-accent/10 flex items-center justify-center overflow-hidden relative">
+                <div className="absolute inset-0 bg-secondary/5 group-hover:bg-secondary/10 transition-colors"></div>
+                <div className="relative z-10 text-center">
+                  <Code size={48} className="text-secondary/50 mx-auto mb-2" />
+                  <p className="text-sm font-semibold text-muted-foreground">Smart Parking</p>
                 </div>
               </div>
-              
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Smart Parking</h3>
-                <p className="text-muted-foreground mb-4">
-                  Location-based parking finder app with real-time availability and booking system.
-                </p>
+                <h3 className="text-xl font-bold mb-2">Smart Parking Finder</h3>
+                <p className="text-sm text-muted-foreground mb-4">Location-Based Parking Booking System</p>
                 
-                <div className="mb-4">
-                  <p className="text-sm font-semibold text-secondary mb-2">Problem Solved</p>
-                  <p className="text-sm text-muted-foreground">Users wasted time searching for available parking spots in congested areas.</p>
+                <div className="space-y-3 mb-6">
+                  <div>
+                    <p className="text-sm font-semibold text-secondary mb-2">Problem</p>
+                    <p className="text-sm text-muted-foreground">Urban commuters struggle to find available parking with real-time availability.</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-secondary mb-2">Solution</p>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>✓ Interactive map with real-time slot availability</li>
+                      <li>✓ Proximity filtering for nearest parking</li>
+                      <li>✓ Seamless online booking system</li>
+                      <li>✓ Digital payments via Razorpay</li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-secondary mb-2">Solution</p>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Real-time parking availability maps</li>
-                    <li>• One-tap booking system</li>
-                    <li>• Mobile-responsive design</li>
-                    <li>• Integrated Maps API</li>
-                  </ul>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-secondary mb-2">Impact</p>
-                  <p className="text-sm text-muted-foreground">Reduces parking search time by 80%, deployed with analytics tracking.</p>
-                </div>
-
-                <div className="mb-4">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase mb-3">Tech Stack</p>
+                  <p className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wide">Tech Stack</p>
                   <div className="flex flex-wrap gap-2">
-                    {['Next.js', 'Maps API', 'Supabase', 'Real-time Sync', 'React', 'Tailwind CSS'].map((tech) => (
-                      <span key={tech} className="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full">
+                    {['React.js', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Leaflet.js', 'Google Maps API'].map((tech) => (
+                      <span key={tech} className="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded-full font-medium">
                         {tech}
                       </span>
                     ))}
@@ -351,6 +299,15 @@ export default function Portfolio() {
                 </div>
 
                 <div className="flex gap-3">
+                  <a
+                    href="https://smart-parking-flame.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-4 py-2 bg-secondary text-secondary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink size={16} />
+                    Live Demo
+                  </a>
                   <a
                     href="https://github.com/shubham03kumar18-coder"
                     target="_blank"
@@ -362,101 +319,218 @@ export default function Portfolio() {
                     </div>
                     Code
                   </a>
-                  <a
-                    href="#"
-                    className="flex-1 px-4 py-2 bg-secondary text-secondary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink size={16} />
-                    Demo
-                  </a>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">Explore more projects on my GitHub profile</p>
+            <a
+              href="https://github.com/shubham03kumar18-coder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary/5 transition-colors"
+            >
+              <GitHubIcon />
+              View All Projects
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="px-6 py-16 md:py-24 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Experience</h2>
+          
+          <div className="space-y-8 max-w-3xl mx-auto">
+            {/* Experience 1 */}
+            <div className="bg-card border border-border rounded-xl p-8 hover:border-primary/50 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-4 mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-primary">Frontend Developer Intern</h3>
+                  <p className="font-semibold text-foreground">Zidio Development</p>
+                  <p className="text-sm text-muted-foreground">Remote</p>
+                </div>
+                <p className="text-sm font-semibold text-primary whitespace-nowrap mt-2 md:mt-0">Jun 2025 – Aug 2025</p>
+              </div>
+              
+              <div className="space-y-2 mb-4">
+                <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Tech Stack</p>
+                <div className="flex flex-wrap gap-2">
+                  {['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'Responsive Design'].map((tech) => (
+                    <span key={tech} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold mt-1">→</span>
+                  <span>Designed and developed responsive user interfaces with 100% cross-browser compatibility across Chrome, Firefox, Safari, and Edge</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold mt-1">→</span>
+                  <span>Built interactive web components and reusable UI elements with focus on performance optimization and accessibility</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold mt-1">→</span>
+                  <span>Collaborated with cross-functional teams in Agile environment, delivering features within sprint timelines</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold mt-1">→</span>
+                  <span>Earned formal team recognition for dedication to code quality and professional excellence</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="px-6 py-16 md:py-24 bg-card/50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Skills</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <p className="font-bold text-primary mb-3 uppercase text-sm tracking-wide">Frontend</p>
+              <div className="flex flex-wrap gap-2">
+                {['React.js', 'Next.js 14', 'TypeScript', 'Tailwind CSS', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Bootstrap'].map((skill) => (
+                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <p className="font-bold text-secondary mb-3 uppercase text-sm tracking-wide">Backend & APIs</p>
+              <div className="flex flex-wrap gap-2">
+                {['Node.js', 'REST APIs', 'Razorpay API', 'Google Maps API', 'WhatsApp Business API'].map((skill) => (
+                  <span key={skill} className="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded-full font-medium">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <p className="font-bold text-accent mb-3 uppercase text-sm tracking-wide">Databases & Auth</p>
+              <div className="flex flex-wrap gap-2">
+                {['Supabase', 'PostgreSQL', 'SQL', 'Authentication'].map((skill) => (
+                  <span key={skill} className="px-2 py-1 bg-accent/10 text-accent text-xs rounded-full font-medium">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <p className="font-bold text-primary mb-3 uppercase text-sm tracking-wide">Tools & Deployment</p>
+              <div className="flex flex-wrap gap-2">
+                {['Vercel', 'Git', 'GitHub', 'Firebase', 'npm', 'VS Code'].map((skill) => (
+                  <span key={skill} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="px-6 py-20 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Professional Experience</h2>
+      {/* Resume Section */}
+      <section id="resume" className="px-6 py-16 md:py-24 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Resume</h2>
           
-          <div className="space-y-8">
-            {/* Internship */}
-            <div className="p-8 border border-border rounded-xl bg-background">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold">Frontend Developer Intern</h3>
-                  <p className="text-primary font-semibold mt-2">Zidio Development</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Resume Preview Card */}
+            <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors">
+              <div className="h-96 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                <div className="text-center">
+                  <FileText className="text-primary/50 mx-auto mb-3" size={64} />
+                  <p className="font-semibold text-muted-foreground">Subham Kumar Resume</p>
+                  <p className="text-xs text-muted-foreground mt-1">Full-Stack Developer</p>
                 </div>
-                <p className="text-muted-foreground whitespace-nowrap">June 2025 – Aug 2025 | Remote</p>
               </div>
-              
-              <div className="space-y-3 mb-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  Designed and developed responsive web components while ensuring 100% cross-browser compatibility. Implemented mobile-first design principles and earned formal team recognition for sprint delivery and code quality.
+              <div className="p-6">
+                <h3 className="font-bold mb-2">Full-Stack Web Developer Resume</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Comprehensive resume highlighting 8+ months of production experience, technical skills, projects, internship, and certifications.
                 </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-semibold text-primary mb-2">Key Achievements</p>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>✓ Developed responsive web components with HTML5, CSS3, Bootstrap</li>
-                    <li>✓ 100% cross-browser compatibility across 4+ browsers</li>
-                    <li>✓ Tested on 15+ device sizes for mobile-first responsiveness</li>
-                    <li>✓ Earned team recognition for code quality</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-primary mb-2">Technologies</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'Responsive Design'].map((tech) => (
-                      <span key={tech} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <a
+                  href="https://blobs.vusercontent.net/blob/Subham_Kumar_Web_Developer_Resume-qjuNXS6R2K4eQmZIuGbiqShEUs3tRE.pdf"
+                  download
+                  className="w-full px-4 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-sm"
+                >
+                  <Download size={16} />
+                  Download Resume (PDF)
+                </a>
               </div>
             </div>
 
-            {/* Project Work */}
-            <div className="p-8 border border-border rounded-xl bg-background">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold">Full-Stack Developer</h3>
-                  <p className="text-primary font-semibold mt-2">Independent Projects</p>
-                </div>
-                <p className="text-muted-foreground whitespace-nowrap">2025 – Present</p>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  Developed and deployed production-ready applications with focus on user experience and technical excellence. Handled full project lifecycle from design to deployment.
+            {/* Resume Details */}
+            <div className="space-y-6">
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h3 className="font-bold text-lg mb-3 text-primary flex items-center gap-2">
+                  <Code size={20} />
+                  Technical Skills
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Comprehensive expertise across modern web development stack including:
                 </p>
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2">
+                    <span className="text-primary font-bold">•</span>
+                    Frontend: React, Next.js 14, TypeScript, Tailwind CSS
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-primary font-bold">•</span>
+                    Backend: Node.js, REST APIs, Payment Integration
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-primary font-bold">•</span>
+                    Databases: Supabase, PostgreSQL, Authentication
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-primary font-bold">•</span>
+                    DevOps: Vercel CI/CD, Git, GitHub, Firebase
+                  </li>
+                </ul>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-semibold text-primary mb-2">Key Projects</p>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>✓ Tradeverse City: EdTech platform with live market data</li>
-                    <li>✓ Smart Parking: Location-based booking system</li>
-                    <li>✓ Integrated payment systems (Razorpay)</li>
-                    <li>✓ Real-time data synchronization solutions</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-primary mb-2">Technologies</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Next.js', 'React', 'TypeScript', 'Supabase', 'APIs'].map((tech) => (
-                      <span key={tech} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h3 className="font-bold text-lg mb-3 text-secondary flex items-center gap-2">
+                  <Target size={20} />
+                  Key Highlights
+                </h3>
+                <ul className="text-sm space-y-2 text-muted-foreground">
+                  <li className="flex gap-2">
+                    <span className="text-secondary font-bold">✓</span>
+                    8+ months of production experience
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-secondary font-bold">✓</span>
+                    2 live projects deployed and live
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-secondary font-bold">✓</span>
+                    Razorpay payment integration expertise
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-secondary font-bold">✓</span>
+                    Real-time API integration experience
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-secondary font-bold">✓</span>
+                    5+ industry certifications
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -464,96 +538,59 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Get In Touch</h2>
+      <section id="contact" className="px-6 py-16 md:py-24 bg-card/50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Let&apos;s Connect</h2>
           
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                I&apos;m always interested in hearing about new projects and opportunities. Whether you have a question or want to collaborate, feel free to reach out.
-              </p>
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            <a
+              href="https://www.linkedin.com/in/subham-kumar-888a98362/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-6 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
+            >
+              <div className="w-8 h-8 text-primary group-hover:scale-110 transition-transform">
+                <LinkedInIcon />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">LinkedIn</p>
+                <p className="font-semibold">Connect with me</p>
+              </div>
+            </a>
 
-              <div className="space-y-6">
-                <a
-                  href="mailto:Shubham46845@gmail.com"
-                  className="flex items-center gap-4 p-4 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
-                >
-                  <Mail className="text-primary group-hover:scale-110 transition-transform" size={24} />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-semibold">Shubham46845@gmail.com</p>
-                  </div>
-                </a>
+            <a
+              href="https://github.com/shubham03kumar18-coder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-6 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
+            >
+              <div className="w-8 h-8 text-primary group-hover:scale-110 transition-transform">
+                <GitHubIcon />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">GitHub</p>
+                <p className="font-semibold">View Repositories</p>
+              </div>
+            </a>
+          </div>
 
-                <a
-                  href="tel:+917428037001"
-                  className="flex items-center gap-4 p-4 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
-                >
-                  <div className="text-primary font-bold text-xl group-hover:scale-110 transition-transform">📱</div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-semibold">+91 7428037001</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/subham-kumar-888a98362/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
-                >
-                  <div className="w-6 h-6 text-primary group-hover:scale-110 transition-transform">
-                    <LinkedInIcon />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">LinkedIn</p>
-                    <p className="font-semibold">View Profile</p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://github.com/shubham03kumar18-coder"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 border border-border rounded-xl hover:border-primary hover:bg-primary/5 transition-colors group"
-                >
-                  <div className="w-6 h-6 text-primary group-hover:scale-110 transition-transform">
-                    <GitHubIcon />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">GitHub</p>
-                    <p className="font-semibold">View Repositories</p>
-                  </div>
+          <div className="bg-card border border-primary/20 rounded-xl p-8 text-center">
+            <h3 className="text-2xl font-bold mb-4">Get in Touch</h3>
+            <p className="text-muted-foreground mb-6">
+              I&apos;m always interested in hearing about new projects and opportunities. Feel free to reach out!
+            </p>
+            
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2">
+                <Mail className="text-primary" size={20} />
+                <a href="mailto:Shubham46845@gmail.com" className="text-primary font-semibold hover:underline">
+                  Shubham46845@gmail.com
                 </a>
               </div>
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <div className="p-8 bg-card border border-border rounded-2xl space-y-6">
-                <div>
-                  <p className="text-sm font-semibold text-muted-foreground uppercase mb-2">Current Status</p>
-                  <p className="text-xl font-bold">Open to Opportunities</p>
-                  <p className="text-muted-foreground mt-2">Seeking full-time roles in full-stack development and web engineering.</p>
-                </div>
-
-                <div>
-                  <p className="text-sm font-semibold text-muted-foreground uppercase mb-2">Location</p>
-                  <p className="text-xl font-bold">South Delhi, India</p>
-                  <p className="text-muted-foreground mt-2">Available for remote work and relocation.</p>
-                </div>
-
-                <div>
-                  <p className="text-sm font-semibold text-muted-foreground uppercase mb-2">Response Time</p>
-                  <p className="text-xl font-bold">24-48 Hours</p>
-                  <p className="text-muted-foreground mt-2">I typically respond to inquiries within one business day.</p>
-                </div>
-
-                <a
-                  href="mailto:Shubham46845@gmail.com"
-                  className="w-full px-8 py-4 bg-primary text-primary-foreground font-bold rounded-lg hover:opacity-90 transition-opacity text-center"
-                >
-                  Send Email Now
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-muted-foreground">Phone:</span>
+                <a href="tel:+917428037001" className="text-primary font-semibold hover:underline">
+                  +91 7428037001
                 </a>
               </div>
             </div>
@@ -562,33 +599,47 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 border-t border-border bg-card">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-muted-foreground">© 2026 Subham Kumar. All rights reserved.</p>
-          
-          <div className="flex gap-6">
-            <a
-              href="https://github.com/shubham03kumar18-coder"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors w-5 h-5"
-            >
-              <GitHubIcon />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/subham-kumar-888a98362/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors w-5 h-5"
-            >
-              <LinkedInIcon />
-            </a>
-            <a
-              href="mailto:Shubham46845@gmail.com"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Mail size={20} />
-            </a>
+      <footer className="px-6 py-12 border-t border-border bg-card/50">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="font-bold text-lg text-primary mb-1">Subham Kumar</p>
+              <p className="text-sm text-muted-foreground">Full-Stack Developer & B.Tech Student</p>
+            </div>
+            
+            <div className="flex gap-6">
+              <a
+                href="https://github.com/shubham03kumar18-coder"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors w-6 h-6"
+              >
+                <GitHubIcon />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/subham-kumar-888a98362/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors w-6 h-6"
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                href="mailto:Shubham46845@gmail.com"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Mail size={24} />
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+            <p>
+              Crafted with care by Subham Kumar. All rights reserved © {new Date().getFullYear()}.
+            </p>
+            <p>
+              Deployed on <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Vercel</a>
+            </p>
           </div>
         </div>
       </footer>
